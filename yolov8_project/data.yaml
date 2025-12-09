@@ -1,0 +1,7 @@
+train: ./dataset/images/train
+val: ./dataset/images/val
+test: ./dataset/images/test
+
+nc: 4
+names: ['rock_toe', 'slope_drain', 'toe_drain', 'vegetation']
+

@@ -1,0 +1,1 @@
+/Users/prathamprabhu/Desktop/CLIP model/yolov8_project/runs/experiments/A1_baseline_aug2/weights/best.pt
