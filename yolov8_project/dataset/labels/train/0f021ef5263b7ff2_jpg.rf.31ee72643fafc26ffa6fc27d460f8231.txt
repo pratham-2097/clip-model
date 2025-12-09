@@ -1,0 +1,1 @@
+/Users/prathamprabhu/Desktop/CLIP model/My First Project.v3-no-aug-test-export.yolov8 (1)/train/labels/0f021ef5263b7ff2_jpg.rf.31ee72643fafc26ffa6fc27d460f8231.txt

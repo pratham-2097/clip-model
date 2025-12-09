@@ -1,0 +1,1 @@
+/Users/prathamprabhu/Desktop/CLIP model/My First Project.v3-no-aug-test-export.yolov8 (1)/train/labels/DJI_0044_W_JPG.rf.0113bdae89fedfd9bf92e2550c1080c8.txt
