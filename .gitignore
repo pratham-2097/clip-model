@@ -13,11 +13,17 @@ __pycache__/
 *.pyc
 *.cache/
 *.log
+training_log.txt
+experiments/
+dataset_merged/
+dataset_consolidated/
+STEP 2- Conditional classes.v1-stage-2--1.yolov11/
 
 # envs
 .env
 venv/
 yolovenv/
+.venv/
 
 # system
 .DS_Store
