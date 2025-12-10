@@ -15,6 +15,7 @@ from ultralytics import YOLO
 MODEL_PATHS = {
     "YOLOv8": "runs/detect/finetune_phase/weights/best.pt",
     "YOLOv11": "runs/detect/yolov11_finetune_phase/weights/best.pt",
+    "YOLOv11-Best": "runs/detect/yolov11_expanded_finetune_aug_reduced/weights/best.pt",  # New best model (82.3% mAP@0.5)
 }
 
 

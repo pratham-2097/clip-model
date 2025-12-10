@@ -74,8 +74,9 @@ def main():
         # Model selection
         model_type = st.radio(
             "Select Model:",
-            ["YOLOv8", "YOLOv11"],
-            help="Choose between YOLOv8 and YOLOv11 for object detection"
+            ["YOLOv11-Best", "YOLOv8", "YOLOv11"],
+            help="Choose a model for object detection. YOLOv11-Best (82.3% mAP) is the recommended model.",
+            index=0  # Default to best model
         )
         
         # Confidence threshold
@@ -100,6 +101,10 @@ def main():
         elif model:
             st.success(f"✅ {model_type} loaded")
             st.caption(f"Path: {model_path}")
+            
+            # Show model performance info for best model
+            if model_type == "YOLOv11-Best":
+                st.info("🏆 **Best Model:** 82.3% mAP@0.5, 53.7% mAP@[0.5:0.95]")
             
             # Show device info
             device = get_device()

@@ -5,7 +5,7 @@ A Streamlit-based web interface for running YOLOv8 and YOLOv11 object detection 
 ## Features
 
 - 🖼️ **Image Upload**: Upload images in JPG, PNG, or BMP format
-- 🔄 **Model Selection**: Choose between YOLOv8 and YOLOv11 models
+- 🔄 **Model Selection**: Choose between YOLOv11-Best (recommended), YOLOv8, and YOLOv11 models
 - ⚙️ **Configurable Confidence**: Adjust confidence threshold with a slider
 - 📊 **Detailed Results**: View annotated images, per-object detections, and per-class summaries
 - 🎯 **Accuracy Metrics**: See confidence scores for each detection and class-level statistics
@@ -29,6 +29,7 @@ pip install -r requirements_ui.txt
 ### Model Weights
 
 Ensure the trained model weights are available at:
+- **YOLOv11-Best** (Recommended): `runs/detect/yolov11_expanded_finetune_aug_reduced/weights/best.pt` (82.3% mAP@0.5)
 - **YOLOv8**: `runs/detect/finetune_phase/weights/best.pt`
 - **YOLOv11**: `runs/detect/yolov11_finetune_phase/weights/best.pt`
 
@@ -53,7 +54,7 @@ Ensure the trained model weights are available at:
 ### Using the Interface
 
 1. **Upload an Image**: Click "Browse files" or drag and drop an image
-2. **Select Model**: Choose YOLOv8 or YOLOv11 from the sidebar
+2. **Select Model**: Choose YOLOv11-Best (recommended), YOLOv8, or YOLOv11 from the sidebar
 3. **Adjust Confidence**: Use the slider to set the confidence threshold (default: 0.25)
 4. **Run Detection**: Click the "🚀 Run Detection" button
 5. **View Results**: 
