@@ -1,0 +1,6 @@
+# UI Dependencies for YOLO Object Detection Web Interface
+streamlit>=1.28.0
+ultralytics>=8.0.0
+pillow>=9.0.0
+numpy>=1.21.0
+
