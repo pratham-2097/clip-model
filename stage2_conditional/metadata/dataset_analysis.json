@@ -1,0 +1,71 @@
+{
+  "class_counts": {
+    "6": 97,
+    "8": 238,
+    "4": 366,
+    "7": 148,
+    "3": 153,
+    "5": 257,
+    "2": 76,
+    "0": 52,
+    "1": 78
+  },
+  "split_counts": {
+    "train": {
+      "6": 75,
+      "8": 174,
+      "4": 282,
+      "7": 118,
+      "3": 119,
+      "5": 202,
+      "2": 58,
+      "0": 44,
+      "1": 57
+    },
+    "valid": {
+      "6": 10,
+      "8": 40,
+      "7": 17,
+      "4": 49,
+      "2": 11,
+      "5": 41,
+      "1": 13,
+      "3": 23,
+      "0": 4
+    },
+    "test": {
+      "5": 14,
+      "2": 7,
+      "8": 24,
+      "4": 35,
+      "6": 12,
+      "7": 13,
+      "3": 11,
+      "1": 8,
+      "0": 4
+    }
+  },
+  "total_instances": 1465,
+  "condition_distribution": {
+    "blocked": 175,
+    "normal": 700,
+    "damaged": 590
+  },
+  "object_type_distribution": {
+    "slope_drain": 502,
+    "vegetation": 238,
+    "rock_toe": 519,
+    "toe_drain": 206
+  },
+  "spatial_relationships_count": 4612,
+  "instances_per_image": {
+    "mean": 5.086805555555555,
+    "std": 3.352460674385677,
+    "min": 1,
+    "max": 18
+  },
+  "image_resolution": {
+    "mean_width": 640.0,
+    "mean_height": 640.0
+  }
+}
