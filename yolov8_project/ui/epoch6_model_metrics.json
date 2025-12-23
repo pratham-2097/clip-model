@@ -1,0 +1,51 @@
+{
+  "model_name": "yolov11-epoch6",
+  "model_path": "/Users/prathamprabhu/Downloads/Githubclip-model-main/CLIP model copy/yolov8_project/runs/detect/phase2_toe_drain_optimized_20251223_113245/weights/best.pt",
+  "test_date": "2025-12-23T23:31:53.409699",
+  "stage1_metrics": {
+    "overall": {
+      "mAP@0.5": 87.2030220046933,
+      "mAP@[0.5:0.95]": 59.13703549212587,
+      "precision": 85.73319117070987,
+      "recall": 84.63607927819214
+    },
+    "per_class": {
+      "rock_toe": {
+        "mAP@0.5": 85.9857142236573,
+        "mAP@[0.5:0.95]": 62.585616666351186,
+        "precision": 79.28996717089274,
+        "recall": 82.35294117647058
+      },
+      "slope_drain": {
+        "mAP@0.5": 88.05560141786182,
+        "mAP@[0.5:0.95]": 54.6138068200247,
+        "precision": 92.70910452926093,
+        "recall": 80.82191780821918
+      },
+      "toe_drain": {
+        "mAP@0.5": 85.92239031097726,
+        "mAP@[0.5:0.95]": 50.55441957582041,
+        "precision": 81.15651401786612,
+        "recall": 85.71428571428571
+      },
+      "vegetation": {
+        "mAP@0.5": 88.84838206627681,
+        "mAP@[0.5:0.95]": 68.79429890630718,
+        "precision": 89.77717896481973,
+        "recall": 89.65517241379311
+      }
+    }
+  },
+  "stage2_metrics": {
+    "test_accuracy": 80.47,
+    "validation_accuracy": 86.54,
+    "trainable_params": 175106,
+    "total_params": 151452419
+  },
+  "test_results": {
+    "model_loaded": true,
+    "detection_test": true,
+    "stage2_test": true,
+    "metrics_evaluated": true
+  }
+}

@@ -14,6 +14,7 @@ Target: 85-90% accuracy in 8 epochs
 import os
 import argparse
 import json
+import sys
 from pathlib import Path
 from datetime import datetime
 import torch
@@ -25,6 +26,11 @@ import numpy as np
 
 from binary_model import HierarchicalBinaryClassifier
 from binary_dataset import create_binary_dataloaders
+
+# Add models directory to path for registry
+models_dir = Path(__file__).parent.parent / "models"
+sys.path.insert(0, str(models_dir))
+from register_model import add_model
 
 
 class WeightedBCELoss(nn.Module):
@@ -269,6 +275,7 @@ def main():
     print("STARTING TRAINING")
     print(f"{'='*80}\n")
     
+    training_start = datetime.now()
     best_val_acc = 0.0
     training_history = {
         'train_loss': [],
@@ -360,6 +367,98 @@ def main():
     print(f"✅ Best validation accuracy: {best_val_acc:.2f}%")
     print(f"✅ Test accuracy: {test_acc:.2f}%")
     print(f"✅ Model saved to: {output_dir}")
+    
+    # Get git commit hash if available
+    git_commit = None
+    try:
+        import subprocess
+        result = subprocess.run(
+            ['git', 'rev-parse', '--short', 'HEAD'],
+            capture_output=True,
+            text=True,
+            cwd=Path(__file__).parent.parent.parent
+        )
+        if result.returncode == 0:
+            git_commit = result.stdout.strip()
+    except:
+        pass
+    
+    # Get dataset info
+    dataset_info = {
+        "train_samples": len(train_loader.dataset),
+        "valid_samples": len(valid_loader.dataset),
+        "test_samples": len(test_loader.dataset),
+    }
+    
+    # Count normal vs conditional
+    try:
+        normal_count = sum(1 for s in train_loader.dataset.samples if s['binary_label'] == 0)
+        conditional_count = sum(1 for s in train_loader.dataset.samples if s['binary_label'] == 1)
+        dataset_info["normal_count"] = normal_count
+        dataset_info["conditional_count"] = conditional_count
+        dataset_info["balance_ratio"] = max(normal_count, conditional_count) / min(normal_count, conditional_count) if min(normal_count, conditional_count) > 0 else 0
+    except:
+        pass
+    
+    # Get model file size
+    model_file = output_dir / 'best_model.pt'
+    file_size_mb = model_file.stat().st_size / (1024 * 1024) if model_file.exists() else None
+    
+    # Calculate training time
+    training_time_seconds = (datetime.now() - training_start).total_seconds() if 'training_start' in locals() else None
+    
+    # Register model in registry
+    print(f"\n📝 Registering model in registry...")
+    try:
+        # Calculate relative path from models directory
+        models_base = Path(__file__).parent.parent / "models"
+        output_dir_abs = Path(args.output_dir).resolve()
+        if not output_dir_abs.is_absolute():
+            output_dir_abs = (Path(__file__).parent.parent / args.output_dir).resolve()
+        
+        # Get relative path
+        try:
+            model_path_rel = output_dir_abs.relative_to(models_base) / "best_model.pt"
+        except ValueError:
+            # If not relative, use absolute path from models directory
+            model_path_rel = Path(args.output_dir) / "best_model.pt"
+        
+        model_path = str(model_path_rel).replace("\\", "/")  # Normalize path
+        
+        add_model(
+            model_path=model_path,
+            model_type="CLIP-B32-Binary",
+            name=f"CLIP ViT-B/32 Binary - {datetime.now().strftime('%Y-%m-%d %H:%M')}",
+            performance={
+                "validation_accuracy": best_val_acc,
+                "test_accuracy": test_acc,
+                "normal_accuracy": test_metrics['normal_accuracy'],
+                "conditional_accuracy": test_metrics['conditional_accuracy'],
+                "conditional_recall": test_metrics['recall_conditional'],
+                "conditional_precision": test_metrics['precision_conditional'],
+                "f1_conditional": test_metrics['f1_conditional'],
+                "training_time_seconds": training_time_seconds,
+                "inference_time_ms_per_object": 100  # Estimated
+            },
+            training_config={
+                "epochs": args.epochs,
+                "batch_size": args.batch_size,
+                "learning_rate": args.lr,
+                "weight_decay": args.weight_decay,
+                "optimizer": "AdamW",
+                "loss": "WeightedBCE",
+                "device": device
+            },
+            dataset_info=dataset_info,
+            notes=f"Trained with {args.epochs} epochs, batch_size={args.batch_size}, lr={args.lr}",
+            git_commit=git_commit,
+            file_size_mb=file_size_mb,
+            status="active"
+        )
+        print(f"✅ Model registered successfully!")
+    except Exception as e:
+        print(f"⚠️  Warning: Could not register model: {e}")
+        print(f"   You can register manually using: python3 register_model.py add --model-path {model_path}")
     
     # Check if target met
     if test_acc >= 85.0:
